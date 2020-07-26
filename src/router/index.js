@@ -29,5 +29,10 @@ export default new Router({
       name: 'Other2',
       component: Other2
     },
+    {
+      path: '/*',
+      name: 'Home',
+      component: Home
+    },
   ]
 })
