@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .navbar {
   background-color: #9db7eb;
   width: 100%;
@@ -57,7 +57,7 @@ export default {
 }
 .navbar ul li a:hover {
   background-color: #dce7fc;
-  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 .navbar ul li a.router-link-active {
   font-weight: 700;
