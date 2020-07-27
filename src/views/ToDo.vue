@@ -2,15 +2,17 @@
   <div class="todo">
     <div class="todo-cards">
       <div class="todo-cover" @click="clickCover"></div>
-      <transition-group class="cards">
-        <ToDoCard
-          v-for="todo in todos"
-          :key="todo.id"
-          :todo="todo"
-          @removeCard="removeCard"
-          @selectCard="selectCard"
-        />
-      </transition-group>
+      <draggable v-model="todos" v-bind="dragOptions" @start="drag = true" @end="drag = false" @change="storeCards">
+        <transition-group class="cards">
+          <ToDoCard
+            v-for="todo in todos"
+            :key="todo.id"
+            :todo="todo"
+            @removeCard="removeCard"
+            @selectCard="selectCard"
+          />
+        </transition-group>
+      </draggable>
       <PlusButton />
     </div>
     <div class="new-card">
@@ -76,6 +78,7 @@
 </template>
 
 <script>
+import draggable from "vuedraggable";
 import ToDoCard from "@/components/ToDoCard";
 import PlusButton from "@/components/PlusButton";
 export default {
@@ -87,9 +90,11 @@ export default {
       editTitle: "",
       editContent: "",
       todos: [],
+      drag: false,
     };
   },
   components: {
+    draggable,
     ToDoCard,
     PlusButton,
   },
@@ -99,7 +104,9 @@ export default {
         alert("タイトルを入力してください");
         return;
       }
-      const newCardId = this.todos[0] ? this.todos[0].id + 1 : 1;
+      const newCardId = this.todos[0]
+        ? Number(this.todos.reduce((a, b) => (a.id > b.id ? a : b)).id + 1)
+        : 1;
       const newCard = {
         id: newCardId,
         title: this.newTitle,
@@ -112,7 +119,7 @@ export default {
       this.newTitle = "";
       this.newContent = "";
       this.storeCards();
-      this.clickCover();
+      // this.clickCover();
     },
     removeCard(id) {
       // console.log("remove:", id);
@@ -163,6 +170,14 @@ export default {
       console.log("value:", value);
       return this.newTitle ? "is-input" : "";
     },
+    dragOptions() {
+      return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost",
+      };
+    },
   },
   created() {
     // this.todos = [
@@ -204,7 +219,7 @@ export default {
 .todo-cards {
   position: relative;
   min-height: calc(100vh - 160px);
-  padding: 80px 20px 80px 300px;
+  padding: 80px 0px 80px 300px;
   transition: 0.5s;
   background-color: #eee;
   z-index: 5;
@@ -213,7 +228,8 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
+  padding: 10px;
 }
 .new-card,
 .edit-card {

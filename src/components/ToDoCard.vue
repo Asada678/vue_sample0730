@@ -52,9 +52,9 @@ export default {
   transition: 0.5s;
 }
 .card:hover {
-  /* filter: blur(); */
+  filter: blur(0);
   box-shadow: 0 15px 30px 3px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1);
+  transform: scale(1.02);
   /* opacity: 1; */
 }
 .card .circle {
@@ -66,6 +66,7 @@ export default {
   text-align: center;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 1);
 }
+
 .card .circle h2 {
   color: #fff;
   font-size: 30px;
