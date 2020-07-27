@@ -1,13 +1,14 @@
 <template>
   <div class="card">
     <div class="circle">
-      <h2>{{ todo.id }}</h2>
+      <h2>{{ todo.title }}</h2>
     </div>
     <div class="content">
-      <p>{{ todo.text }}</p>
+      <p>{{ todo.content }}</p>
       <button @click="removeCard">完了</button>
-      <button @click="editCard">編集</button>
+      <button @click="selectCard">編集</button>
     </div>
+    <div class="edit-icon" v-if="isSelected">aaa</div>
   </div>
 </template>
 
@@ -18,15 +19,22 @@ export default {
       type: Object
     }
   },
+  data() {
+    return {
+      isSelected: false
+    }
+  },
   methods: {
     removeCard() {
-      console.log('remove:', )
-      console.log('this:', this.todo.id)
+      // console.log('remove:', )
+      // console.log('this:', this.todo.id)
       this.$emit('removeCard', this.todo.id)
     },
-    editCard() {
-      console.log('edit:', )
-      console.log('this:', this.todo)
+    selectCard() {
+      console.log('selectCards this:', this)
+      this.isSelected = true
+      document.querySelector(".todo").classList.toggle("edit-open");
+      this.$emit('selectCard', this.todo);
     },
   }
 }
@@ -61,8 +69,8 @@ export default {
 }
 .card .circle h2 {
   color: #fff;
-  font-size: 40px;
-  padding: 10px;
+  font-size: 30px;
+  padding: 15px 5px;
   margin: 0;
 }
 .card .content {
@@ -103,5 +111,14 @@ export default {
   background-color: #9db7eb;
   border: 1px solid #6585c7
 ;
+}
+.edit-icon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 0;
+  left: 0;
+  background-color: red;
+  z-index: 10;
 }
 </style>

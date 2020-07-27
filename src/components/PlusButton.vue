@@ -19,7 +19,8 @@ export default {
 .plus-button {
   position: fixed;
   top: 90px;
-  right: 60px;
+  left: 60px;
+  /* right: 60px; */
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -53,7 +54,7 @@ export default {
 }
 .todo-open .plus-button {
   background-color: #fff;
-  transform: translateX(300px);
+  /* transform: translateX(300px); */
 }
 .todo-open.todo .plus-button span:first-child {
   background-color: #0f43ab;
