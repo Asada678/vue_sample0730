@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="other">
     This is other2 page.
   </div>
 </template>
@@ -10,6 +10,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.other {
+  padding: 200px;
+}
 </style>

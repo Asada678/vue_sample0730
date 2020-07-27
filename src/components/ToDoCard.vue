@@ -8,7 +8,7 @@
       <button @click="removeCard">完了</button>
       <button @click="selectCard">編集</button>
     </div>
-    <div class="edit-icon" v-if="isSelected">aaa</div>
+    <div class="edit-icon" v-if="todo.isSelected">aaa</div>
   </div>
 </template>
 
@@ -16,28 +16,27 @@
 export default {
   props: {
     todo: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
-      isSelected: false
-    }
+      isSelected: false,
+    };
   },
   methods: {
     removeCard() {
       // console.log('remove:', )
       // console.log('this:', this.todo.id)
-      this.$emit('removeCard', this.todo.id)
+      this.$emit("removeCard", this.todo.id);
     },
     selectCard() {
-      console.log('selectCards this:', this)
-      this.isSelected = true
+      this.todo.isSelected = true;
       document.querySelector(".todo").classList.toggle("edit-open");
-      this.$emit('selectCard', this.todo);
+      this.$emit("selectCard", this.todo);
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -86,11 +85,15 @@ export default {
   color: #666;
 }
 .card .content button {
+  font-family: inherit;
   position: relative;
   display: inline-block;
   font-size: 12px;
   font-weight: 6000;
-  padding: 5px 15px;
+  text-align: center;
+  letter-spacing: 2px;
+  text-indent: 2px;
+  padding: 8px 13px;
   /* background-color: #000; */
   color: #fff;
   border-radius: 40px;
@@ -105,12 +108,11 @@ export default {
 }
 .card .content button:nth-child(2) {
   background-color: #58b545;
-  border: 1px solid rgb(8, 134, 8);
+  border: 1px solid #249c32;
 }
 .card .content button:nth-child(3) {
-  background-color: #9db7eb;
-  border: 1px solid #6585c7
-;
+  background-color: #ffc626;
+  border: 1px solid #ffa560;
 }
 .edit-icon {
   position: absolute;

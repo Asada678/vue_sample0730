@@ -15,17 +15,61 @@
     </div>
     <div class="new-card">
       <div class="new-card-content">
-        <input class="item form" type="text" v-model="newTitle" placeholder="title" />
-        <textarea class="item form" v-model="newContent" cols="30" rows="10"></textarea>
-        <button class="item btn" @click="addCard">追加</button>
+        <div class="item item-input">
+          <input
+            class="text-input"
+            :class="{'is-input' : !!newTitle}"
+            type="text"
+            v-model="newTitle"
+          />
+          <label>タイトル</label>
+          <span class="focus-line"></span>
+        </div>
+        <div class="item item-input">
+          <textarea
+            class="text-input textarea-input"
+            :class="{'is-input' : !!newContent}"
+            v-model="newContent"
+            cols="30"
+            rows="10"
+          ></textarea>
+          <label>内容</label>
+          <span class="focus-line"></span>
+        </div>
+        <div class="item">
+          <button class="btn" @click="addCard">追加</button>
+        </div>
       </div>
     </div>
     <div class="edit-card">
       <div class="edit-card-content">
+        <div class="item item-input">
+          <input
+            class="text-input"
+            :class="{'is-input' : !!editTitle}"
+            type="text"
+            v-model="editTitle"
+          />
+          <label>タイトル</label>
+          <span class="focus-line"></span>
+        </div>
+        <div class="item item-input">
+          <textarea
+            class="text-input textarea-input"
+            :class="{'is-input' : !!editContent}"
+            v-model="editContent"
+            cols="30"
+            rows="10"
+          ></textarea>
+          <label>内容</label>
+          <span class="focus-line"></span>
+        </div>
+        <!-- <input class="item form" type="text" v-model="editTitle" placeholder="title" />
+        <textarea class="item form" v-model="editContent" cols="30" rows="10"></textarea>-->
+        <div class="item">
+          <button class="btn" @click="editCard">編集</button>
+        </div>
         <input class="item form" type="hidden" v-model="editId" />
-        <input class="item form" type="text" v-model="editTitle" placeholder="title" />
-        <textarea class="item form" v-model="editContent" cols="30" rows="10"></textarea>
-        <button class="item btn" @click="editCard">編集</button>
       </div>
     </div>
   </div>
@@ -55,18 +99,20 @@ export default {
         alert("タイトルを入力してください");
         return;
       }
-      const newCardId = this.todos ? this.todos[0].id + 1 : 1;
+      const newCardId = this.todos[0] ? this.todos[0].id + 1 : 1;
       const newCard = {
         id: newCardId,
         title: this.newTitle,
         content: this.newContent,
+        isSelected: false,
       };
       // console.log("newCard:", newCard);
-      this.todos = this.todos ? [newCard, ...this.todos] : [newCard];
+      // this.todos = this.todos ? [newCard, ...this.todos] : [newCard];
+      this.todos = [newCard, ...this.todos];
       this.newTitle = "";
       this.newContent = "";
       this.storeCards();
-      this.clickCover()
+      this.clickCover();
     },
     removeCard(id) {
       // console.log("remove:", id);
@@ -80,16 +126,17 @@ export default {
       this.editContent = todo.content;
     },
     editCard() {
-      console.log('editCard this:', this)
-      this.todos.find(todo => {
-        if(todo.id === this.editId) {
-          // console.log('find:')
+      if (this.editTitle === "") {
+        alert("タイトルを入力してください");
+        return;
+      }
+      this.todos.find((todo) => {
+        if (todo.id === this.editId) {
           todo.title = this.editTitle;
           todo.content = this.editContent;
-          todo.isSelected = false
+          todo.isSelected = false;
         }
-      })
-      document.querySelector(".card").classList.toggle("editing");
+      });
       this.clickCover();
       this.storeCards();
     },
@@ -101,8 +148,20 @@ export default {
       if (document.querySelector(".todo").classList.contains("todo-open")) {
         document.querySelector(".todo").classList.remove("todo-open");
       } else {
+        // this.editCard();
+        this.todos.find((todo) => {
+          if (todo.isSelected) {
+            todo.isSelected = false;
+          }
+        });
         document.querySelector(".todo").classList.remove("edit-open");
       }
+    },
+  },
+  computed: {
+    isInput: function (value) {
+      console.log("value:", value);
+      return this.newTitle ? "is-input" : "";
     },
   },
   created() {
@@ -135,7 +194,7 @@ export default {
   width: calc(100% - 300px);
   /* width: 100%; */
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
   visibility: hidden;
   z-index: auto;
@@ -159,7 +218,8 @@ export default {
 .new-card,
 .edit-card {
   position: fixed;
-  top: 250px;
+  /* top: 250px; */
+  bottom: 10px;
   width: 300px;
 }
 .new-card {
@@ -172,11 +232,16 @@ export default {
 .edit-card-content {
   perspective: 2000px;
   transform-style: preserve-3d;
+  padding: 0 40px;
 }
 .new-card-content .item,
 .edit-card-content .item {
-  margin: 20px 40px;
+  /* margin: 20px 40px; */
+  position: relative;
+  margin: 20px 0;
+  padding: 0;
   display: block;
+  width: 100%;
   transform: translate3d(0, 0, -1000px);
   opacity: 0;
   transition: transform 0.3s, opacity 0.4s;
@@ -196,6 +261,98 @@ export default {
 }
 .todo-open .new-card-content .item:nth-child(4) {
   transition-delay: 0.4s;
+}
+.item-input input[type="text"] {
+  font-size: 20px;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+.textarea-input {
+  font-family: inherit;
+  font-size: 20px;
+  width: 100%;
+  resize: none;
+}
+.text-input {
+  outline: none;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 1px solid #aaaaaa;
+  background-color: transparent;
+}
+.text-input ~ .focus-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  transition: 0.4s;
+  background-color: #6585c7;
+}
+.edit-open .text-input ~ .focus-line {
+  background-color: #ffbc00;
+}
+.text-input:focus ~ .focus-line {
+  left: 0;
+  width: 100%;
+  transition: width 0.4s, left 0.4s;
+}
+.textarea-input:focus ~ .focus-line {
+  bottom: 2px;
+}
+.text-input ~ label {
+  position: absolute;
+  z-index: -1;
+  top: 4px;
+  left: 0;
+  width: 100%;
+  transition: 0.3s;
+  letter-spacing: 0.5px;
+  color: #aaaaaa;
+}
+.text-input:focus ~ label,
+.is-input ~ label {
+  font-size: 12px;
+  top: -16px;
+  transition: 0.3s;
+}
+.text-input:focus ~ label {
+  color: #6585c7;
+}
+.edit-open .text-input:focus ~ label {
+  color: #ffbc00;
+}
+.btn {
+  width: 100%;
+  height: 50px;
+  outline: none;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  text-indent: 10px;
+  letter-spacing: 10px;
+  color: #fff;
+  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.new-card .btn {
+  background-color: #426cc0;
+  border: 2px solid #6585c7;
+}
+.edit-card .btn {
+  background-color: #ffc626;
+  border: 1px solid #ffbc00;
+  /* background-color: #9db7eb;
+  border: 2px solid #6585c7; */
+}
+.btn:hover {
+  transition-delay: 0s;
+  opacity: 0.9;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 .todo-open .todo-cards {
   z-index: auto;
@@ -237,5 +394,8 @@ export default {
   opacity: 1;
   visibility: visible;
   left: 0;
+}
+.todo-cover:hover {
+  opacity: 0.7;
 }
 </style>

@@ -47,6 +47,7 @@ export default {
   border-right: 1px solid #0f43ab31;
   border-radius: 2px;
   margin: 0 0.5px;
+  text-align: center;
 }
 .navbar ul li a {
   display: block;
