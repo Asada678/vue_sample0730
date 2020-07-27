@@ -5,7 +5,8 @@
     </div>
     <div class="content">
       <p>{{ todo.text }}</p>
-      <a href="#">...</a>
+      <button @click="removeCard">完了</button>
+      <button @click="editCard">編集</button>
     </div>
   </div>
 </template>
@@ -16,8 +17,18 @@ export default {
     todo: {
       type: Object
     }
+  },
+  methods: {
+    removeCard() {
+      console.log('remove:', )
+      console.log('this:', this.todo.id)
+      this.$emit('removeCard', this.todo.id)
+    },
+    editCard() {
+      console.log('edit:', )
+      console.log('this:', this.todo)
+    },
   }
-
 }
 </script>
 
@@ -27,28 +38,26 @@ export default {
   width: 150px;
   height: 200px;
   background-color: #fff;
-  margin: 20px;
+  margin: 10px;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
   transition: 0.5s;
 }
-.todo-open .card {
-  filter: blur(10px);
-  opacity: 0.5;
-}
 .card:hover {
-  filter: blur();
+  /* filter: blur(); */
+  box-shadow: 0 15px 30px 3px rgba(0, 0, 0, 0.3);
   transform: scale(1.1);
-  opacity: 1;
+  /* opacity: 1; */
 }
 .card .circle {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #000;
+  background-color: #426cc0;
   clip-path: circle(100px at center -20px);
   text-align: center;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 1);
 }
 .card .circle h2 {
   color: #fff;
@@ -68,14 +77,31 @@ export default {
 .card .content p {
   color: #666;
 }
-.card .content a {
+.card .content button {
   position: relative;
   display: inline-block;
-  padding: 5px 20px;
-  background-color: #000;
+  font-size: 12px;
+  font-weight: 6000;
+  padding: 5px 15px;
+  /* background-color: #000; */
   color: #fff;
   border-radius: 40px;
   text-decoration: none;
   margin-top: 10px;
+  transition: 0.3s;
+  outline: none;
+  cursor: pointer;
+}
+.card .content button:hover {
+  box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+.card .content button:nth-child(2) {
+  background-color: #58b545;
+  border: 1px solid rgb(8, 134, 8);
+}
+.card .content button:nth-child(3) {
+  background-color: #9db7eb;
+  border: 1px solid #6585c7
+;
 }
 </style>

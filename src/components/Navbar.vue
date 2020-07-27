@@ -9,6 +9,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -25,8 +26,11 @@ export default {
 
 <style scoped>
 .navbar {
+  position: fixed;
   background-color: #9db7eb;
   width: 100%;
+  z-index: 30;
+  box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.3);
 }
 .navbar ul {
   margin: 0;
@@ -41,6 +45,7 @@ export default {
   height: 60px;
   border-left: 1px solid #0f43ab31;
   border-right: 1px solid #0f43ab31;
+  border-radius: 2px;
   margin: 0 0.5px;
 }
 .navbar ul li a {
@@ -53,6 +58,7 @@ export default {
   cursor: pointer;
   line-height: 58px;
   transition: all 0.3s;
+  border-radius: 2px;
   color: #4d73bf;
 }
 .navbar ul li a:hover {
