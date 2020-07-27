@@ -14,5 +14,4 @@ export default {
 .other {
   padding: 100px;
 }
-
 </style>

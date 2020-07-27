@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .plus-button {
   position: fixed;
   top: 90px;
