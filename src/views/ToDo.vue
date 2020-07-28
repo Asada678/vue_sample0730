@@ -2,7 +2,13 @@
   <div class="todo">
     <div class="todo-cards">
       <div class="todo-cover" @click="clickCover"></div>
-      <draggable v-model="todos" v-bind="dragOptions" @start="drag = true" @end="drag = false" @change="storeCards">
+      <draggable
+        v-model="todos"
+        v-bind="dragOptions"
+        @start="drag = true"
+        @end="drag = false"
+        @change="storeCards"
+      >
         <transition-group class="cards">
           <ToDoCard
             v-for="todo in todos"
@@ -104,18 +110,18 @@ export default {
         alert("タイトルを入力してください");
         return;
       }
-      const newCardId = this.todos[0]
+      const newToDoId = this.todos.length
         ? Number(this.todos.reduce((a, b) => (a.id > b.id ? a : b)).id + 1)
         : 1;
-      const newCard = {
-        id: newCardId,
+      const newToDo = {
+        id: newToDoId,
         title: this.newTitle,
         content: this.newContent,
         isSelected: false,
       };
-      // console.log("newCard:", newCard);
-      // this.todos = this.todos ? [newCard, ...this.todos] : [newCard];
-      this.todos = [newCard, ...this.todos];
+      // console.log("newToDo:", newToDo);
+      // this.todos = this.todos ? [newToDo, ...this.todos] : [newToDo];
+      this.todos = [newToDo, ...this.todos];
       this.newTitle = "";
       this.newContent = "";
       this.storeCards();
