@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{'editing' : todo.isSelected}">
     <div class="circle">
       <h2>{{ todo.title }}</h2>
     </div>
@@ -8,7 +8,7 @@
       <button @click="removeCard">完了</button>
       <button @click="selectCard">編集</button>
     </div>
-    <div class="edit-icon" v-if="todo.isSelected">aaa</div>
+    <!-- <div class="edit-icon" v-if="todo.isSelected">aaa</div> -->
   </div>
 </template>
 
@@ -26,8 +26,6 @@ export default {
   },
   methods: {
     removeCard() {
-      // console.log('remove:', )
-      // console.log('this:', this.todo.id)
       this.$emit("removeCard", this.todo.id);
     },
     selectCard() {
@@ -115,13 +113,7 @@ export default {
   background-color: #ffc626;
   border: 1px solid #ffa560;
 }
-.edit-icon {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 0;
-  left: 0;
-  background-color: red;
-  z-index: 10;
+.card.editing {
+  border: 3px solid #ffa560;
 }
 </style>

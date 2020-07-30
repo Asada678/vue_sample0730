@@ -44,10 +44,8 @@ export default {
   width: 40px;
   height: 3px;
   border-radius: 2px;
-  transition: all 0.3s;
+  transition: all 0.4s;
   z-index: 2;
-}
-.plus-button span:first-child {
 }
 .plus-button span:last-child {
   transform: translate(-50%, -50%) rotate(90deg);

@@ -72,8 +72,6 @@
           <label>内容</label>
           <span class="focus-line"></span>
         </div>
-        <!-- <input class="item form" type="text" v-model="editTitle" placeholder="title" />
-        <textarea class="item form" v-model="editContent" cols="30" rows="10"></textarea>-->
         <div class="item">
           <button class="btn" @click="editCard">編集</button>
         </div>
@@ -87,6 +85,7 @@
 import draggable from "vuedraggable";
 import ToDoCard from "@/components/ToDoCard";
 import PlusButton from "@/components/PlusButton";
+
 export default {
   data() {
     return {
@@ -110,18 +109,18 @@ export default {
         alert("タイトルを入力してください");
         return;
       }
-      const newToDoId = this.todos.length
+      const newCardId = this.todos.length
         ? Number(this.todos.reduce((a, b) => (a.id > b.id ? a : b)).id + 1)
         : 1;
-      const newToDo = {
-        id: newToDoId,
+      const newCard = {
+        id: newCardId,
         title: this.newTitle,
         content: this.newContent,
         isSelected: false,
       };
-      // console.log("newToDo:", newToDo);
-      // this.todos = this.todos ? [newToDo, ...this.todos] : [newToDo];
-      this.todos = [newToDo, ...this.todos];
+      // console.log("newCard:", newCard);
+      // this.todos = this.todos ? [newCard, ...this.todos] : [newCard];
+      this.todos = [newCard, ...this.todos];
       this.newTitle = "";
       this.newContent = "";
       this.storeCards();
@@ -233,8 +232,9 @@ export default {
 .cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
+  /* justify-content: space-around; */
+  justify-content: start;
+  margin: 0 20px;
   padding: 10px;
 }
 .new-card,
@@ -347,6 +347,7 @@ export default {
   color: #ffbc00;
 }
 .btn {
+  font-family: inherit;
   width: 100%;
   height: 50px;
   outline: none;
