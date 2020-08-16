@@ -67,7 +67,7 @@ export default {
 
 .card .circle h2 {
   color: #fff;
-  font-size: 30px;
+  font-size: 22px;
   padding: 15px 5px;
   margin: 0;
 }

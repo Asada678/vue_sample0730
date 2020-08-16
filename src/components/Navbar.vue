@@ -2,7 +2,7 @@
   <nav class="navbar">
     <ul>
       <li v-for="link in links" :key="link.text">
-        <router-link :to="link.route">{{ link.text}}</router-link>
+        <router-link :to="link.route">{{ link.text }}</router-link>
       </li>
     </ul>
   </nav>
@@ -16,7 +16,7 @@ export default {
       links: [
         { text: "ホーム", route: "/home" },
         { text: "ToDo", route: "/todo" },
-        { text: "その他１", route: "/other1" },
+        { text: "その他１", route: "/other1", show: false },
         { text: "その他２", route: "/other2" },
       ],
     };

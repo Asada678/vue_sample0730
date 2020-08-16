@@ -109,9 +109,15 @@ export default {
         alert("タイトルを入力してください");
         return;
       }
-      const newCardId = this.todos.length
-        ? Number(this.todos.reduce((a, b) => (a.id > b.id ? a : b)).id + 1)
-        : 1;
+      let newCardId;
+      if (this.todos === null) {
+        this.todos = [];
+        newCardId = 1;
+      } else {
+        newCardId = this.todos.length
+          ? Number(this.todos.reduce((a, b) => (a.id > b.id ? a : b)).id + 1)
+          : 1;
+      }
       const newCard = {
         id: newCardId,
         title: this.newTitle,
